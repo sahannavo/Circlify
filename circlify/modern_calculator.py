@@ -1,21 +1,19 @@
-"""Main Circlify application class"""
-
 import tkinter as tk
 from tkinter import ttk
 import math
 
-class CirclifyApp:
-    """Main application class - Human-centered circle calculator"""
-    
+class ModernCalculator:
     def __init__(self):
         self.app = tk.Tk()
         self.app.title("Circlify")
         
+        # Set window size
         self.app.geometry("550x750")
         self.app.minsize(500, 650)
-        self.app.maxsize(700, 750)
+        self.app.maxsize(700,750)
         self.app.resizable(True, True)
         
+        # Modern color palette
         self.colors = {
             'bg': '#f5f7fa',
             'card': '#ffffff',
@@ -29,14 +27,23 @@ class CirclifyApp:
             'input_bg': '#f9fafb'
         }
         
+        # Configure main window
         self.app.configure(bg=self.colors['bg'])
         
+        # Create main container
         self.main_container = tk.Frame(self.app, bg=self.colors['bg'])
         self.main_container.pack(fill=tk.BOTH, expand=True)
         
+        # Create header
         self.create_header()
+        
+        # Create scrollable area
         self.create_scrollable_area()
+        
+        # Create all content
         self.create_ui()
+        
+        # Set up keyboard shortcuts
         self.setup_shortcuts()
         
     def create_header(self):
@@ -45,11 +52,13 @@ class CirclifyApp:
         header_frame.pack(fill=tk.X, side=tk.TOP)
         header_frame.pack_propagate(False)
         
+        # Title
         title = tk.Label(header_frame, text="○ Circle Calculator", 
                         bg=self.colors['primary'], fg='white',
                         font=('Segoe UI', 16, 'bold'))
         title.pack(side=tk.LEFT, padx=20, pady=15)
         
+        # Close button
         close_btn = tk.Button(header_frame, text='✕', 
                              bg=self.colors['primary'], fg='white',
                              bd=0, font=('Segoe UI', 18, 'bold'),
@@ -59,6 +68,7 @@ class CirclifyApp:
                              cursor='hand2')
         close_btn.pack(side=tk.RIGHT, padx=15, pady=12)
         
+        # Minimize button
         min_btn = tk.Button(header_frame, text='−', 
                            bg=self.colors['primary'], fg='white',
                            bd=0, font=('Segoe UI', 22, 'bold'),
@@ -70,11 +80,13 @@ class CirclifyApp:
         
     def create_scrollable_area(self):
         """Create scrollable area for content"""
+        # Create canvas and scrollbar
         self.canvas = tk.Canvas(self.main_container, bg=self.colors['bg'],
                                 highlightthickness=0)
         self.scrollbar = ttk.Scrollbar(self.main_container, orient="vertical", 
                                        command=self.canvas.yview)
         
+        # Create scrollable frame
         self.scrollable_frame = tk.Frame(self.canvas, bg=self.colors['bg'])
         self.scrollable_frame.bind("<Configure>", lambda e: self.canvas.configure(
             scrollregion=self.canvas.bbox("all")))
@@ -82,15 +94,19 @@ class CirclifyApp:
         self.canvas_window = self.canvas.create_window((0, 0), window=self.scrollable_frame, 
                                                        anchor="nw")
         
+        # Update canvas width when resized
         def configure_canvas(event):
             self.canvas.itemconfig(self.canvas_window, width=event.width)
         
         self.canvas.bind('<Configure>', configure_canvas)
+        
         self.canvas.configure(yscrollcommand=self.scrollbar.set)
         
+        # Pack canvas and scrollbar
         self.canvas.pack(side="left", fill="both", expand=True)
         self.scrollbar.pack(side="right", fill="y")
         
+        # Bind mouse wheel
         def on_mousewheel(event):
             self.canvas.yview_scroll(int(-1*(event.delta/120)), "units")
         
@@ -105,14 +121,17 @@ class CirclifyApp:
         card = tk.Frame(parent, bg=self.colors['card'], relief=tk.FLAT)
         card.pack(fill=tk.X, pady=10, padx=20)
         
+        # Card header with subtle border
         header_border = tk.Frame(card, bg=self.colors['border'], height=1)
         header_border.pack(fill=tk.X, padx=20, pady=(20, 0))
         
+        # Title
         title_label = tk.Label(card, text=title,
                               font=('Segoe UI', 13, 'bold'),
                               bg=self.colors['card'], fg=self.colors['primary'])
         title_label.pack(anchor='w', padx=20, pady=(15, 15))
         
+        # Content frame
         content = tk.Frame(card, bg=self.colors['card'])
         content.pack(fill=tk.X, padx=20, pady=(0, 20))
         
@@ -145,6 +164,7 @@ class CirclifyApp:
                                bg=self.colors['card'], fg=self.colors['text'])
         radius_label.pack(anchor='w', pady=(0, 5))
         
+        # Entry with border
         entry_frame = tk.Frame(input_card, bg=self.colors['border'], 
                               highlightthickness=0, bd=1, relief=tk.FLAT)
         entry_frame.pack(fill=tk.X, pady=(0, 15))
@@ -166,6 +186,7 @@ class CirclifyApp:
         unit_frame = tk.Frame(input_card, bg=self.colors['card'])
         unit_frame.pack(fill=tk.X, pady=(0, 5))
         
+        # Radio buttons for units
         metric_rb = tk.Radiobutton(unit_frame, text="Metric (cm/m)", 
                                    variable=self.unit_var, value="metric",
                                    bg=self.colors['card'], fg=self.colors['text'],
@@ -189,6 +210,7 @@ class CirclifyApp:
         
         self.calc_var = tk.StringVar()
         
+        # Diameter option
         diameter_frame = tk.Frame(calc_card, bg=self.colors['card'])
         diameter_frame.pack(fill=tk.X, pady=8)
         
@@ -207,6 +229,7 @@ class CirclifyApp:
                                     font=('Segoe UI', 10, 'italic'))
         diameter_formula.pack(side=tk.RIGHT)
         
+        # Circumference option
         circ_frame = tk.Frame(calc_card, bg=self.colors['card'])
         circ_frame.pack(fill=tk.X, pady=8)
         
@@ -225,6 +248,7 @@ class CirclifyApp:
                                 font=('Segoe UI', 10, 'italic'))
         circ_formula.pack(side=tk.RIGHT)
         
+        # Area option
         area_frame = tk.Frame(calc_card, bg=self.colors['card'])
         area_frame.pack(fill=tk.X, pady=8)
         
@@ -249,6 +273,7 @@ class CirclifyApp:
         button_container = tk.Frame(action_card, bg=self.colors['card'])
         button_container.pack(fill=tk.X, pady=10)
         
+        # Calculate button
         self.calc_btn = tk.Button(button_container, text="Calculate", 
                                   command=self.calculate,
                                   font=('Segoe UI', 11, 'bold'),
@@ -260,6 +285,7 @@ class CirclifyApp:
                                   activeforeground='white')
         self.calc_btn.pack(side=tk.LEFT, expand=True, fill=tk.X, padx=(0, 5))
         
+        # Clear button
         clear_btn = tk.Button(button_container, text="Clear All", 
                               command=self.clear_all,
                               font=('Segoe UI', 11, 'bold'),
@@ -280,11 +306,13 @@ class CirclifyApp:
                                      wraplength=450, justify=tk.CENTER)
         self.result_label.pack(pady=20)
         
+        # Error/Status display
         self.error_label = tk.Label(self.scrollable_frame, text="",
                                     font=('Segoe UI', 10),
                                     bg=self.colors['bg'], fg=self.colors['danger'])
         self.error_label.pack(pady=(0, 10))
         
+        # Quick Reference Card
         ref_card = self.create_card(self.scrollable_frame, "📖 Quick Reference")
         
         ref_text = """• Diameter = 2 × radius
@@ -326,6 +354,7 @@ class CirclifyApp:
         """Perform calculation"""
         self.error_label.config(text="")
         
+        # Validate radius
         radius_text = self.radius_entry.get()
         is_valid, error_msg, radius = self.validate_radius(radius_text)
         
@@ -337,12 +366,14 @@ class CirclifyApp:
         if error_msg:
             self.error_label.config(text=error_msg)
         
+        # Validate calculation type
         calc_type = self.calc_var.get()
         if not calc_type:
             self.error_label.config(text="Please select a calculation type")
             self.result_label.config(text="Selection required", fg=self.colors['text_light'])
             return
         
+        # Perform calculation
         if calc_type == "diameter":
             result = 2 * radius
             formula = "Diameter = 2 × radius"
@@ -351,11 +382,12 @@ class CirclifyApp:
             result = 2 * math.pi * radius
             formula = "Circumference = 2πr"
             calc_name = "Circumference"
-        else:
+        else:  # area
             result = math.pi * (radius ** 2)
             formula = "Area = πr²"
             calc_name = "Area"
         
+        # Format result
         if result < 0.01:
             result_str = f"{result:.6f}"
         elif result < 1:
@@ -365,12 +397,14 @@ class CirclifyApp:
         else:
             result_str = f"{result:.1f}"
         
+        # Get unit
         unit_system = self.unit_var.get()
         if calc_type == "area":
             unit = "cm²" if unit_system == "metric" else "in²"
         else:
             unit = "cm" if unit_system == "metric" else "in"
         
+        # Create result message
         result_text = f"""🎉 {calc_name}: {result_str} {unit}
 
 📐 Radius: {radius} {"cm" if unit_system == "metric" else "in"}
@@ -380,6 +414,7 @@ class CirclifyApp:
         self.result_label.config(text=result_text, fg=self.colors['text'])
         self.error_label.config(text="✅ Calculation complete!", fg=self.colors['secondary'])
         
+        # Clear success message after 2 seconds
         self.app.after(2000, lambda: self.clear_success_message())
     
     def clear_success_message(self):
@@ -395,10 +430,12 @@ class CirclifyApp:
         self.error_label.config(text="✨ All cleared! Ready for new calculation")
         self.radius_entry.focus_set()
         
+        # Clear message after 2 seconds
         self.app.after(2000, lambda: self.clear_success_message())
     
     def run(self):
         """Run the application"""
+        # Center window on screen
         self.app.update_idletasks()
         x = (self.app.winfo_screenwidth() // 2) - (550 // 2)
         y = (self.app.winfo_screenheight() // 2) - (750 // 2)
@@ -408,5 +445,5 @@ class CirclifyApp:
 
 
 if __name__ == "__main__":
-    app = CirclifyApp()
+    app = ModernCalculator()
     app.run()
