@@ -11,9 +11,9 @@ class CirclifyApp:
         self.app = tk.Tk()
         self.app.title("Circlify")
         
-        self.app.geometry("550x750")
-        self.app.minsize(500, 650)
-        self.app.maxsize(700, 750)
+        self.app.geometry("550x1024")
+        self.app.minsize(500, 750)
+        self.app.maxsize(700, 1024)
         self.app.resizable(True, True)
         
         self.colors = {
