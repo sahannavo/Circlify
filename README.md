@@ -13,7 +13,8 @@ A modern, human-centered circle calculator with an intuitive graphical interface
 
 ## Screenshots
 
-![Circlify Screenshot](screenshots/app.png)
+![Circlify Screenshot 01](https://github.com/sahannavo/Circlify/blob/main/screenshots/img%2001.png?raw=true)
+![Circlify Screenshot 02](https://github.com/sahannavo/Circlify/blob/main/screenshots/img%2002.png?raw=true)
 
 ## Installation
 
