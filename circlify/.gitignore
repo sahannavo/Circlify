@@ -1,0 +1,53 @@
+# Create .gitignore to exclude unnecessary files
+cat > .gitignore << 'EOF'
+# Python
+__pycache__/
+*.py[cod]
+*.so
+.Python
+
+# Virtual Environment
+venv/
+env/
+ENV/
+.venv/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Distribution
+dist/
+build/
+*.egg-info/
+*.egg
+
+# Testing
+.pytest_cache/
+.coverage
+htmlcov/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Logs
+*.log
+
+# Local configuration
+.env
+config.local.py
+EOF
+
+# Add .gitignore
+git add .gitignore
+git commit -m "🔒 chore: Add .gitignore to exclude unnecessary files
+
+- Exclude Python cache files
+- Exclude virtual environments
+- Exclude IDE configuration files
+- Exclude OS system files"
